@@ -42,13 +42,15 @@ while running:
             if event.key == pygame.K_DOWN:
                 game.move(down=True)
 
+            if event.key == pygame.K_SPACE:
+                game.move(torque=True)
+
     # fill the screen with a color to wipe away anything from last frame
 
     figures = game.getSquares()
 
     for fig in figures:
         for sqr in fig.squares:
-            print(sqr.x, sqr.y, sqr.side)
             # TODO: Fix this. (sqr.y -sqr.side) is not the correct way to draw the square
             rect = pygame.Rect(sqr.x, sqr.y - sqr.side, sqr.side, sqr.side)
             pygame.draw.rect(screen, "red", rect)

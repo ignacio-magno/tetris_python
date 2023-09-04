@@ -3,6 +3,18 @@ from domain.figuras.square_base import SquareBase
 
 
 class Square(Figure):
+    def to_second_position(self):
+        pass
+
+    def to_third_position(self):
+        pass
+
+    def to_fourth_position(self):
+        pass
+
+    def to_first_position(self):
+        pass
+
     def __init__(self, x, y, side):
         super().__init__(side)
 
@@ -12,10 +24,3 @@ class Square(Figure):
             SquareBase(x, y - side, side),
             SquareBase(x + side, y - side, side)
         ]
-
-    def width(self):
-        return self.side * 2
-
-    def xr(self):
-        return self.x() + self.width()
-

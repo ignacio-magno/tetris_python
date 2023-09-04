@@ -15,16 +15,17 @@ class Game:
         self.current_figure = self.g.generate()
         self.width_square = width_square
 
-    def move(self, left: bool = False, right: bool = False, down: bool = False):
+    def move(self, left: bool = False, right: bool = False, down: bool = False, torque: bool = False):
         figur = self.current_figure
         # print coord
-        print("x: " + str(figur.x()) + " y: " + str(figur.y()))
         if left:
             figur.move_left()
         if right:
             figur.move_right()
         if down:
             figur.move_down()
+        if torque:
+            figur.torque()
 
         if not self.r.correct_move(self.squares, figur):
             figur.reverse_move()
