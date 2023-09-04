@@ -2,7 +2,6 @@ import threading
 
 import pygame
 
-import collideImplementation
 from domain import game as gm
 
 # pygame setup
@@ -11,7 +10,7 @@ screen = pygame.display.set_mode((500, 750))
 clock = pygame.time.Clock()
 running = True
 
-game = gm.Game(500, 750, 50, collideImplementation.CollideImplementation())
+game = gm.Game(500, 750, 50)
 
 
 def repeat_each_second():
@@ -45,11 +44,14 @@ while running:
 
     # fill the screen with a color to wipe away anything from last frame
 
-    squares = game.getSquares()
+    figures = game.getSquares()
 
-    for square in squares:
-        rect = pygame.Rect(square.x, square.y, square.width, square.width)
-        pygame.draw.rect(screen, "red", rect)
+    for fig in figures:
+        for sqr in fig.squares:
+            print(sqr.x, sqr.y, sqr.side)
+            # TODO: Fix this. (sqr.y -sqr.side) is not the correct way to draw the square
+            rect = pygame.Rect(sqr.x, sqr.y - sqr.side, sqr.side, sqr.side)
+            pygame.draw.rect(screen, "red", rect)
 
     # RENDER YOUR GAME HERE
     if game.gameOver():
