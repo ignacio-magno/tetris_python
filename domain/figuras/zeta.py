@@ -5,6 +5,9 @@ from domain.figuras.square_base import SquareBase
 
 class Zeta(Figure):
 
+    def get_color(self):
+        return "red"
+
     def to_second_position(self):
         # the first square move to  right
         self.squares[0].x += self.side

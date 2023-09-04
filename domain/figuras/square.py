@@ -3,6 +3,9 @@ from domain.figuras.square_base import SquareBase
 
 
 class Square(Figure):
+    def get_color(self):
+        return "orange"
+
     def to_second_position(self):
         pass
 

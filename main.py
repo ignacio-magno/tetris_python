@@ -12,6 +12,10 @@ running = True
 
 game = gm.Game(500, 750, 50)
 
+sound = pygame.mixer.Sound("sound.mp3")
+
+sound.play(loops=-1)
+
 
 def repeat_each_second():
     game.move(down=True)
@@ -53,7 +57,14 @@ while running:
         for sqr in fig.squares:
             # TODO: Fix this. (sqr.y -sqr.side) is not the correct way to draw the square
             rect = pygame.Rect(sqr.x, sqr.y - sqr.side, sqr.side, sqr.side)
-            pygame.draw.rect(screen, "red", rect)
+
+            color = fig.get_color()
+            print(color)
+            pygame.draw.rect(screen, color, rect)
+
+            darkColor = pygame.Color("dark" + color)
+
+            pygame.draw.rect(screen, darkColor, rect.inflate(-4, -4))
 
     # RENDER YOUR GAME HERE
     if game.gameOver():
