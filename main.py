@@ -14,7 +14,8 @@ game = gm.Game(500, 750, 50)
 
 sound = pygame.mixer.Sound("sound.mp3")
 
-sound.play(loops=-1)
+
+# sound.play(loops=-1)
 
 
 def repeat_each_second():
@@ -49,22 +50,25 @@ while running:
             if event.key == pygame.K_SPACE:
                 game.move(torque=True)
 
+            # pause
+            if event.key == pygame.K_p:
+                sound.stop()
+                pygame.mixer.music.pause()
+
     # fill the screen with a color to wipe away anything from last frame
 
     figures = game.getSquares()
 
-    for fig in figures:
-        for sqr in fig.squares:
-            # TODO: Fix this. (sqr.y -sqr.side) is not the correct way to draw the square
-            rect = pygame.Rect(sqr.x, sqr.y - sqr.side, sqr.side, sqr.side)
+    for sqr in figures:
+        # TODO: Fix this. (sqr.y -sqr.side) is not the correct way to draw the square
+        rect = pygame.Rect(sqr.x, sqr.y - sqr.side, sqr.side, sqr.side)
 
-            color = fig.get_color()
-            print(color)
-            pygame.draw.rect(screen, color, rect)
+        color = sqr.color
+        pygame.draw.rect(screen, color, rect)
 
-            darkColor = pygame.Color("dark" + color)
+        darkColor = pygame.Color("dark" + color)
 
-            pygame.draw.rect(screen, darkColor, rect.inflate(-4, -4))
+        pygame.draw.rect(screen, darkColor, rect.inflate(-4, -4))
 
     # RENDER YOUR GAME HERE
     if game.gameOver():
@@ -74,6 +78,7 @@ while running:
 
         screen.blit(game_over_text, (100, 300))
     else:
+        game.check_lines()
         pass
 
     # flip() the display to put your work on screen

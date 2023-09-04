@@ -1,7 +1,8 @@
+from typing import List
+
+from domain.figuras import square_base
 from domain.figuras.figure import Figure
-from domain.figuras.square import Square
 from domain.figuras.square_base import SquareBase
-from domain.iCollition import ICollition
 
 
 class Rules:
@@ -11,9 +12,9 @@ class Rules:
         self.heightScreen = heightScreen
         self.step = step
 
-    def isEnd(self, squares: [SquareBase]):
+    def is_line_fill(self, squares: [SquareBase]) -> [bool, int]:
         # for eqach heightScreen between 0 and heightScreen with step
-        for y in range(0, self.heightScreen, self.step):
+        for y in range(0, self.heightScreen + self.step, self.step):
             squares_in_line = self.getSquaresInLine(squares, y)
 
             # sum the width of all squares in the line
@@ -24,8 +25,9 @@ class Rules:
             # if the sum of the width of all squares in the line is equal to the widthScreen
             # then the game is over
             if sum_width == self.widthScreen:
-                return True
-        return False
+                return True, y
+
+        return False, -1
 
     @staticmethod
     def getSquaresInLine(squares, y):
@@ -35,7 +37,7 @@ class Rules:
                 squares_in_line.append(square)
         return squares_in_line
 
-    def correct_move(self, squares: [Figure], square_mov: Figure):
+    def correct_move(self, squares: List[square_base.SquareBase], square_mov: Figure):
         if square_mov.x() < 0 or square_mov.xr() > self.widthScreen:
             return False
 
@@ -44,8 +46,7 @@ class Rules:
 
         for i in square_mov.squares:
             for j in squares:
-                for k in j.squares:
-                    if i.x == k.x and i.y == k.y:
-                        return False
+                if i.x == j.x and i.y == j.y:
+                    return False
 
         return True

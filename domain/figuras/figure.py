@@ -132,7 +132,3 @@ class Figure(ABC):
     @abstractmethod
     def to_first_position(self):
         pass
-
-    @abstractmethod
-    def get_color(self):
-        pass

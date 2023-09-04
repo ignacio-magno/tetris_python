@@ -3,9 +3,6 @@ from domain.figuras.square_base import SquareBase
 
 
 class Square(Figure):
-    def get_color(self):
-        return "orange"
-
     def to_second_position(self):
         pass
 
@@ -22,8 +19,8 @@ class Square(Figure):
         super().__init__(side)
 
         self.squares = [
-            SquareBase(x, y, side),
-            SquareBase(x + side, y, side),
-            SquareBase(x, y - side, side),
-            SquareBase(x + side, y - side, side)
+            SquareBase(x, y, side, "orange"),
+            SquareBase(x + side, y, side, "orange"),
+            SquareBase(x, y - side, side, "orange"),
+            SquareBase(x + side, y - side, side, "orange"),
         ]

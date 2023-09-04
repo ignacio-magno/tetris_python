@@ -1,7 +1,7 @@
 import unittest
 
 from domain import rules
-from domain.figuras import square, zeta
+from domain.figuras import square, zeta, square_base
 
 
 class MyTestCase(unittest.TestCase):
@@ -9,22 +9,25 @@ class MyTestCase(unittest.TestCase):
         sut = rules.Rules(30, 100, 10)
 
         squar = [
-            square.Square(0, 0, 10),
-            square.Square(10, 0, 10),
-            square.Square(20, 0, 10),
+            square_base.SquareBase(0, 0, 10),
+            square_base.SquareBase(10, 0, 10),
+            square_base.SquareBase(20, 0, 10),
         ]
 
-        self.assertTrue(sut.isEnd(squar))
+        isFill, index = sut.is_line_fill(squar)
+
+        self.assertTrue(isFill)
+        self.assertEqual(index, 0)
 
     def test_OnLineIsNotFill_ThenNotEnd(self):
         sut = rules.Rules(30, 100, 10)
 
         squar = [
-            square.Square(0, 0, 10),
-            square.Square(10, 0, 10),
+            square_base.SquareBase(0, 0, 10),
+            square_base.SquareBase(10, 0, 10),
         ]
-
-        self.assertFalse(sut.isEnd(squar))
+        isFille, _ = sut.is_line_fill(squar)
+        self.assertFalse(isFille)
 
     def test_move_limit_down(self):
         sut = rules.Rules(30, 100, 10)
@@ -62,34 +65,16 @@ class MyTestCase(unittest.TestCase):
 
         self.assertFalse(sut.correct_move([], current_square))
 
-    def test_on_torque_zeta(self):
-        sut = rules.Rules(40, 100, 10)
+    def test_correct_move_collition(self):
+        sut = rules.Rules(30, 100, 10)
 
-        current_square = zeta.Zeta(10, 0, 10)
-        self.assertTrue(sut.correct_move([], current_square))
+        current_square = square.Square(10, 10, 10)
 
-        current_square.move_right()
-        self.assertTrue(sut.correct_move([], current_square))
+        squares = [
+            square_base.SquareBase(10, 10, 10),
+        ]
 
-        current_square.move_right()
-        self.assertFalse(sut.correct_move([], current_square))
+        self.assertFalse(sut.correct_move(squares, current_square))
 
-        current_square.reverse_move()
-
-        current_square.torque()
-
-        self.assertTrue(sut.correct_move([], current_square))
-
-        current_square.move_right()
-
-        self.assertTrue(sut.correct_move([], current_square))
-
-        current_square.torque()
-
-        self.assertFalse(sut.correct_move([], current_square))
-
-
-
-
-if __name__ == '__main__':
-    unittest.main()
+        if __name__ == '__main__':
+            unittest.main()

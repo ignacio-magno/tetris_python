@@ -5,9 +5,6 @@ from domain.figuras.square_base import SquareBase
 
 class Ele(Figure):
 
-    def get_color(self):
-        return "blue"
-
     def to_second_position(self):
         # the first square move to right and up
         self.squares[0].x += self.side
@@ -67,10 +64,12 @@ class Ele(Figure):
     def __init__(self, x, y, side):
         super().__init__(side)
 
+        color = "blue"
+
         self.squares = [
             # y must be max 0
-            SquareBase(x, y, side),
-            SquareBase(x, y - side, side),
-            SquareBase(x, y - side * 2, side),
-            SquareBase(x + side, y - side * 2, side)
+            SquareBase(x, y, side, color),
+            SquareBase(x, y - side, side, color),
+            SquareBase(x, y - side * 2, side, color),
+            SquareBase(x + side, y - side * 2, side, color)
         ]
