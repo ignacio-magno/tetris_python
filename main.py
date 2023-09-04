@@ -11,7 +11,7 @@ screen = pygame.display.set_mode((500, 750))
 clock = pygame.time.Clock()
 running = True
 
-game = gm.Game(500, 750, 25, collideImplementation.CollideImplementation())
+game = gm.Game(500, 750, 50, collideImplementation.CollideImplementation())
 
 
 def repeat_each_second():
@@ -28,8 +28,6 @@ while running:
     pygame.draw.line(screen, "white", (0, 0), (0, 750), 5)
     pygame.draw.line(screen, "white", (500, 0), (500, 750), 5)
     pygame.draw.line(screen, "white", (0, 750), (500, 750), 5)
-
-
 
     # poll for events
     # pygame.QUIT event means the user clicked X to close your window
@@ -54,6 +52,14 @@ while running:
         pygame.draw.rect(screen, "red", rect)
 
     # RENDER YOUR GAME HERE
+    if game.gameOver():
+
+        font = pygame.font.Font(None, 75)
+        game_over_text = font.render("Game Over", True, (255, 0, 0))  #
+
+        screen.blit(game_over_text, (100, 300))
+    else:
+        pass
 
     # flip() the display to put your work on screen
     pygame.display.flip()

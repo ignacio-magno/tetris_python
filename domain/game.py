@@ -3,6 +3,7 @@ from domain.iCollition import ICollition
 
 
 class Game:
+
     def __init__(self, width, height, width_square, i_collition: ICollition):
         self.squares = []
         self.width = width
@@ -34,3 +35,6 @@ class Game:
     def getSquares(self):
         # join the current square with the squares
         return self.squares + [self.current_square]
+
+    def gameOver(self):
+        return self.r.isEnd(self.squares)
