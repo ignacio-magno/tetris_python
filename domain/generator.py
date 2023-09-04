@@ -2,6 +2,7 @@ import random
 from enum import Enum
 
 from domain.figuras.Ele import Ele
+from domain.figuras.Line import Line
 from domain.figuras.square import Square
 from domain.figuras.zeta import Zeta
 
@@ -10,6 +11,7 @@ class Figura(Enum):
     SQUARE = 1
     ELE = 2
     ZETA = 3
+    LINE = 4
 
 
 class Generator:
@@ -31,6 +33,9 @@ class Generator:
 
         if type_figure == Figura.ZETA:
             fgr = Zeta(x, 0, self.width_square)
+
+        if type_figure == Figura.LINE:
+            fgr = Line(x, 0, self.width_square)
 
         self.adjust_figure(fgr)
         return fgr
