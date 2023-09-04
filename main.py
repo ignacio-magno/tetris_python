@@ -7,11 +7,11 @@ from domain import game as gm
 
 # pygame setup
 pygame.init()
-screen = pygame.display.set_mode((1280, 720))
+screen = pygame.display.set_mode((500, 750))
 clock = pygame.time.Clock()
 running = True
 
-game = gm.Game(500, 1000, 25, collideImplementation.CollideImplementation())
+game = gm.Game(500, 750, 25, collideImplementation.CollideImplementation())
 
 
 def repeat_each_second():
@@ -22,6 +22,15 @@ def repeat_each_second():
 repeat_each_second()
 
 while running:
+    screen.fill("black")
+
+    # draw limit line
+    pygame.draw.line(screen, "white", (0, 0), (0, 750), 5)
+    pygame.draw.line(screen, "white", (500, 0), (500, 750), 5)
+    pygame.draw.line(screen, "white", (0, 750), (500, 750), 5)
+
+
+
     # poll for events
     # pygame.QUIT event means the user clicked X to close your window
     for event in pygame.event.get():
@@ -37,7 +46,6 @@ while running:
                 game.move(down=True)
 
     # fill the screen with a color to wipe away anything from last frame
-    screen.fill("purple")
 
     squares = game.getSquares()
 

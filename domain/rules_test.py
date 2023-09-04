@@ -53,6 +53,42 @@ class MyTestCase(unittest.TestCase):
 
         self.assertEqual(square_mov.y, 10)
 
+    def test_move_limit_down(self):
+        sut = rules.Rules(30, 100, 10, None)
+
+        current_square = square.Square(10, 90, 10)
+
+        self.assertTrue(sut.canMove([], current_square))
+
+        current_square = square.Square(10, 100, 10)
+
+        self.assertTrue(sut.canMove([], current_square))
+
+        current_square = square.Square(10, 110, 10)
+        self.assertFalse(sut.canMove([], current_square))
+
+    def test_move_limit_left(self):
+        sut = rules.Rules(30, 100, 10, None)
+
+        current_square = square.Square(0, 0, 10)
+
+        self.assertTrue(sut.canMove([], current_square))
+
+        current_square = square.Square(-10, 0, 10)
+
+        self.assertFalse(sut.canMove([], current_square))
+
+    def test_move_limit_right(self):
+        sut = rules.Rules(30, 100, 10, None)
+
+        current_square = square.Square(20, 0, 10)
+
+        self.assertTrue(sut.canMove([], current_square))
+
+        current_square = square.Square(30, 0, 10)
+
+        self.assertFalse(sut.canMove([], current_square))
+
 
 if __name__ == '__main__':
     unittest.main()

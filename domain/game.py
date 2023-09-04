@@ -24,6 +24,12 @@ class Game:
 
         if self.r.canMove(self.squares, fake_mov):
             self.current_square = fake_mov
+        else:
+            if down:
+                self.squares.append(self.current_square)
+                self.current_square = self.g.generate()
+            else:
+                print("No se puede mover")
 
     def getSquares(self):
         # join the current square with the squares

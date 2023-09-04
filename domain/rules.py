@@ -35,6 +35,12 @@ class Rules:
         return squares_in_line
 
     def canMove(self, squares: [Square], square_mov):
+        if square_mov.x < 0 or square_mov.x + square_mov.width > self.widthScreen:
+            return False
+
+        if square_mov.y < 0 or square_mov.y + square_mov.width > self.heightScreen:
+            return False
+
         # iterate over all squares and check if the square_mov can move
         for square in squares:
             if self.iCollition.collide(square_mov, square):
