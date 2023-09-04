@@ -132,3 +132,7 @@ class Figure(ABC):
     @abstractmethod
     def to_first_position(self):
         pass
+
+    @abstractmethod
+    def generate_new_clone(self, x, y):
+        pass

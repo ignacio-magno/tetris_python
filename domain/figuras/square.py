@@ -3,6 +3,9 @@ from domain.figuras.square_base import SquareBase
 
 
 class Square(Figure):
+    def generate_new_clone(self, x, y):
+        return Square(x, y, self.side)
+
     def to_second_position(self):
         pass
 

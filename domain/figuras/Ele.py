@@ -5,6 +5,9 @@ from domain.figuras.square_base import SquareBase
 
 class Ele(Figure):
 
+    def generate_new_clone(self, x, y):
+        return Ele(x, y, self.side)
+
     def to_second_position(self):
         # the first square move to right and up
         self.squares[0].x += self.side

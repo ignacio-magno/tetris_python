@@ -7,12 +7,14 @@ from domain.figuras import square_base
 class Game:
 
     def __init__(self, width, height, width_square):
+        self.score = 0
         self.squares: List[square_base.SquareBase] = []
         self.width = width
         self.height = height
         self.r = rules.Rules(width, height, width_square)
         self.g = generator.Generator(width, width_square)
         self.current_figure = self.g.generate()
+        self.next_figure = self.g.generate()
         self.width_square = width_square
 
     def move(self, left: bool = False, right: bool = False, down: bool = False, torque: bool = False):
@@ -31,7 +33,8 @@ class Game:
             figur.reverse_move()
             if down:
                 self.squares.extend(self.current_figure.squares)
-                self.current_figure = self.g.generate()
+                self.current_figure = self.next_figure
+                self.next_figure = self.g.generate()
             else:
                 print("No se puede mover")
 
@@ -52,6 +55,7 @@ class Game:
             if line_fill:
                 self.squares = self.remove_line(y)
                 self.move_down_squares(y)
+                self.score += 100
             else:
                 break
 

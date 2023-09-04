@@ -1,9 +1,11 @@
 from domain.figuras.figure import Figure
-from domain.figuras.position import Position
 from domain.figuras.square_base import SquareBase
 
 
 class Zeta(Figure):
+    def generate_new_clone(self, x, y):
+        return Zeta(x, y, self.side)
+
     def to_second_position(self):
         # the first square move to  right
         self.squares[0].x += self.side

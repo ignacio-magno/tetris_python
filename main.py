@@ -6,7 +6,7 @@ from domain import game as gm
 
 # pygame setup
 pygame.init()
-screen = pygame.display.set_mode((500, 750))
+screen = pygame.display.set_mode((700, 750))
 clock = pygame.time.Clock()
 running = True
 
@@ -15,12 +15,25 @@ game = gm.Game(500, 750, 50)
 sound = pygame.mixer.Sound("sound.mp3")
 
 
-# sound.play(loops=-1)
+sound.play(loops=-1)
 
 
 def repeat_each_second():
     game.move(down=True)
     threading.Timer(1.0, repeat_each_second).start()
+
+
+def draw_figure(fig):
+    for sqr in fig:
+        # TODO: Fix this. (sqr.y -sqr.side) is not the correct way to draw the square
+        rect = pygame.Rect(sqr.x, sqr.y - sqr.side, sqr.side, sqr.side)
+
+        color = sqr.color
+        pygame.draw.rect(screen, color, rect)
+
+        darkColor = pygame.Color("dark" + color)
+
+        pygame.draw.rect(screen, darkColor, rect.inflate(-4, -4))
 
 
 repeat_each_second()
@@ -32,6 +45,17 @@ while running:
     pygame.draw.line(screen, "white", (0, 0), (0, 750), 5)
     pygame.draw.line(screen, "white", (500, 0), (500, 750), 5)
     pygame.draw.line(screen, "white", (0, 750), (500, 750), 5)
+
+    # draw score
+    font = pygame.font.Font(None, 40)
+    score_text = font.render("Score: " + str(game.score), True, (255, 0, 0))
+    screen.blit(score_text, (530, 50))
+
+    next_figure_text = font.render("Next Figure", True, (255, 0, 0))
+    screen.blit(next_figure_text, (530, 150))
+    # draw next figure
+    next_figure = game.next_figure
+    draw_figure(next_figure.generate_new_clone(530, 350).squares)
 
     # poll for events
     # pygame.QUIT event means the user clicked X to close your window
@@ -56,19 +80,7 @@ while running:
                 pygame.mixer.music.pause()
 
     # fill the screen with a color to wipe away anything from last frame
-
-    figures = game.getSquares()
-
-    for sqr in figures:
-        # TODO: Fix this. (sqr.y -sqr.side) is not the correct way to draw the square
-        rect = pygame.Rect(sqr.x, sqr.y - sqr.side, sqr.side, sqr.side)
-
-        color = sqr.color
-        pygame.draw.rect(screen, color, rect)
-
-        darkColor = pygame.Color("dark" + color)
-
-        pygame.draw.rect(screen, darkColor, rect.inflate(-4, -4))
+    draw_figure(game.getSquares())
 
     # RENDER YOUR GAME HERE
     if game.gameOver():
